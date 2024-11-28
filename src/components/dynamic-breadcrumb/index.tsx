@@ -1,6 +1,6 @@
 "use client";
 
-import { useBreadcrumbs } from "@/lib/utils";
+import { useBreadcrumbs } from "@/lib/clientUtils";
 import React from "react";
 import {
   Breadcrumb,

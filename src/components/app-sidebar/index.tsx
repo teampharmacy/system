@@ -45,11 +45,11 @@ const menuItems = [
         items: [
           {
             title: "Эмийн жагсаалт",
-            url: "#",
+            url: "/medicine-list",
           },
           {
             title: "Эмийн төрөл",
-            url: "#",
+            url: "/medicine-type",
           },
         ],
       },
@@ -60,15 +60,15 @@ const menuItems = [
         items: [
           {
             title: "Борлуулалтын тайлан",
-            url: "#",
+            url: "/sales-report",
           },
           {
             title: "Санхүүгийн тайлан",
-            url: "#",
+            url: "/finance-report",
           },
           {
             title: "Агуулахын тайлан",
-            url: "#",
+            url: "storage-report",
           },
         ],
       },

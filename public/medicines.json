@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "Paracetamol",
+    "numberPurchased": 200,
+    "numberLeft": 120,
+    "instruction": "Take 1-2 tablets every 4-6 hours as needed. Do not exceed 8 tablets in 24 hours.",
+    "sideEffect": "Nausea, allergic reactions, rash",
+    "price": 0.1,
+    "typeId": 1
+  },
+  {
+    "id": 2,
+    "name": "Amoxicillin",
+    "numberPurchased": 150,
+    "numberLeft": 90,
+    "instruction": "Take 1 capsule every 8 hours for 7-10 days.",
+    "sideEffect": "Diarrhea, headache, rash",
+    "price": 0.25,
+    "typeId": 2
+  },
+  {
+    "id": 3,
+    "name": "Ibuprofen",
+    "numberPurchased": 300,
+    "numberLeft": 200,
+    "instruction": "Take 1 tablet every 6-8 hours with food. Do not exceed 6 tablets in 24 hours.",
+    "sideEffect": "Stomach pain, dizziness, nausea",
+    "price": 0.15,
+    "typeId": 3
+  },
+  {
+    "id": 4,
+    "name": "Metformin",
+    "numberPurchased": 100,
+    "numberLeft": 70,
+    "instruction": "Take 1 tablet twice daily with meals.",
+    "sideEffect": "Diarrhea, nausea, metallic taste",
+    "price": 0.3,
+    "typeId": 4
+  },
+  {
+    "id": 5,
+    "name": "Loratadine",
+    "numberPurchased": 80,
+    "numberLeft": 50,
+    "instruction": "Take 1 tablet once daily.",
+    "sideEffect": "Drowsiness, headache, dry mouth",
+    "price": 0.2,
+    "typeId": 5
+  },
+  {
+    "id": 6,
+    "name": "Omeprazole",
+    "numberPurchased": 90,
+    "numberLeft": 45,
+    "instruction": "Take 1 capsule once daily before a meal.",
+    "sideEffect": "Headache, abdominal pain, dizziness",
+    "price": 0.35,
+    "typeId": 6
+  },
+  {
+    "id": 7,
+    "name": "Ciprofloxacin",
+    "numberPurchased": 120,
+    "numberLeft": 80,
+    "instruction": "Take 1 tablet every 12 hours for 7-14 days.",
+    "sideEffect": "Nausea, diarrhea, sensitivity to sunlight",
+    "price": 0.5,
+    "typeId": 2
+  },
+  {
+    "id": 8,
+    "name": "Amlodipine",
+    "numberPurchased": 60,
+    "numberLeft": 40,
+    "instruction": "Take 1 tablet once daily.",
+    "sideEffect": "Swelling, fatigue, dizziness",
+    "price": 0.4,
+    "typeId": 7
+  },
+  {
+    "id": 9,
+    "name": "Cetirizine",
+    "numberPurchased": 100,
+    "numberLeft": 75,
+    "instruction": "Take 1 tablet once daily.",
+    "sideEffect": "Drowsiness, dry mouth, stomach pain",
+    "price": 0.15,
+    "typeId": 5
+  },
+  {
+    "id": 10,
+    "name": "Simvastatin",
+    "numberPurchased": 50,
+    "numberLeft": 30,
+    "instruction": "Take 1 tablet once daily in the evening.",
+    "sideEffect": "Muscle pain, headache, nausea",
+    "price": 0.45,
+    "typeId": 8
+  }
+]

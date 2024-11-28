@@ -51,7 +51,7 @@ export default function RootLayout({
               <DynamicBreadcrumb />
             </header>
             <main
-              className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+              className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-1 flex-col gap-4 p-10`}
             >
               {children}
             </main>
