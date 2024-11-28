@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -44,7 +45,11 @@ export const columns: ColumnDef<Medicine>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("name")}</div>,
+    cell: ({ row }) => (
+      <Link href={"/medicine-list/" + row.getValue("name")}>
+        {row.getValue("name")}
+      </Link>
+    ),
   },
   {
     accessorKey: "typeId",

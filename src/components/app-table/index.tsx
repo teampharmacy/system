@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { flexRender, Row, Table as TanstackTable } from "@tanstack/react-table";
+import { flexRender, Table as TanstackTable } from "@tanstack/react-table";
 
 interface AppTableProps<TData> {
   table: TanstackTable<TData>; // The table instance from @tanstack/react-table

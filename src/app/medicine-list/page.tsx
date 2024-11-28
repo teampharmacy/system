@@ -23,7 +23,6 @@ const MedicineListPage = () => {
 
   return (
     <div>
-      {/* <div>Medicine List Page</div> */}
       <div className="container mx-auto py-4">
         <DataTable columns={columns} data={medicines} />
       </div>
