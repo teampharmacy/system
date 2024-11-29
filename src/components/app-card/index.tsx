@@ -21,7 +21,7 @@ const AppCard = ({
 }: AppCardProps): JSX.Element => {
   return (
     <Card
-      className="w-fit hover:scale-105 duration-200 cursor-pointer shadow-lg"
+      className="w-full max-w-sm hover:scale-105 duration-200 cursor-pointer shadow-lg"
       onClick={onClick}
     >
       <CardHeader>
