@@ -1,10 +1,10 @@
 "use client";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { getMedicineByName } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import MedicineCard from "./medicine-card";
 import { useParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { PencilLine } from "lucide-react";
 
 interface Medicine {
   name: string;
@@ -44,6 +44,13 @@ const DynamicMedicinePage = () => {
 
   return (
     <div className="flex flex-col gap-y-8">
+      <div className="flex justify-between">
+        <h2>{medicine?.name}</h2>
+        <Button className="flex bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+          {" "}
+          <PencilLine /> Засах
+        </Button>
+      </div>
       <div className="flex justify-between gap-10">
         <MedicineCard title="Эм">
           <div className="flex justify-between mt-4">
