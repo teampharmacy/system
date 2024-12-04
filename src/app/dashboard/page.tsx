@@ -1,4 +1,4 @@
-"use client";
+
 
 import AppCard from "@/components/app-card";
 import { Banknote, HandCoins, ChevronFirst } from "lucide-react";
@@ -13,7 +13,7 @@ async function getPosts(){
 }
 export default async function DashboardPage() {
   const posts = await getPosts();
-  const router = useRouter();
+  //const router = useRouter();
 
   const cards = [
     {
@@ -39,9 +39,9 @@ export default async function DashboardPage() {
     },
   ];
 
-  const handleClick = (to: string) => {
-    router.push(to);
-  };
+  // const handleClick = (to: string) => {
+  //   router.push(to);
+  // };
 
   return (
     // <div className="space-y-6 p-6 bg-gray-100 min-h-screen">
@@ -97,23 +97,25 @@ export default async function DashboardPage() {
     //   </div>
     // </div>
     <main>
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-lg font-bold">Ажилтнуудын жагсаалт</h2>
-        <div className="mt-4">
-          {posts.length > 0 ? (
-            posts.map((post: any) => (
-              <div key={post.id} className="border-b border-gray-200 py-4">
-                <h3 className="text-xl font-semibold">{post.name}</h3>
-                <p className="text-gray-500">Тодорхойлолт:</p>
-                {/* Add more details from the post here */}
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500">Өгөгдөл байхгүй байна.</p>
-          )}
-        </div>
+    <div className="bg-white p-6 rounded-lg shadow-lg">
+      <h2 className="text-lg font-bold">Ажилтнуудын жагсаалт</h2>
+      <div className="mt-4">
+        {posts.length > 0 ? (
+          posts.map((post: any) => (
+            // Ensure that the key is unique and always consistent
+            <div key={post.id} className="border-b border-gray-200 py-4">
+              <h3 className="text-xl font-semibold">{post.position}</h3>
+              <p className="text-gray-500">Тодорхойлолт:</p>
+              {/* Add more details from the post here */}
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-500">Өгөгдөл байхгүй байна.</p>
+        )}
       </div>
-    </main>
+    </div>
+  </main>
+  
   );
 };
 
