@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Employee {
+  employeeID String   @id @default(cuid())
+  name       String
+  position   String
+  pharmacists Pharmacist[]
+}
+
+model Pharmacist {
+  licenseNumber String @id
+  employeeID    String
+  employee      Employee @relation(fields: [employeeID], references: [employeeID])
+}
+
+model Product {
+  productID   String   @id @default(cuid())
+  name        String
+  price       Float
+  expiryDate  DateTime
+  quantities  Quantity[]
+}
+
+model Quantity {
+  productID    String
+  quantityNumber Int
+  product      Product @relation(fields: [productID], references: [productID])
+
+  @@id([productID, quantityNumber])  // Composite key
+}
+
+model SalesTransaction {
+  transactionID String  @id @default(cuid())
+  totalAmount   Float
+  paymentInfo   String
+  date          DateTime
+  report        Report? @relation(fields: [reportID], references: [reportID])
+  reportID      String?
+  payments      Payment[]  // Reverse relation for Payment
+}
+
+model Report {
+  reportID String   @id @default(cuid())
+  time     DateTime
+  salesTransactions SalesTransaction[]
+}
+
+model Accountant {
+  employeeID String  @id @default(cuid()) // Add a unique field
+  salary     Float
+}
+
+model Payment {
+  paymentID   String   @id @default(cuid())
+  paymentType String
+  amount      Float
+  salesTransaction SalesTransaction[]  // Relation to SalesTransaction
+}
