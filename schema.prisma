@@ -85,4 +85,49 @@ model Medicine {
   updatedAt     DateTime    @updatedAt                  // Timestamp for when the record was last updated
 }
 
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  name      String?
+  image     String?
+  role      String    @default("user") // "user" or "admin"
+  approved  Boolean   @default(false)
+  accounts  Account[]
+  sessions  Session[]
+}
+
+model Account {
+  id                 String   @id @default(uuid())
+  userId             String
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  // For OAuth providers
+  access_token       String?  // For OAuth providers
+  expires_at         Int?     // For OAuth providers
+  token_type         String?  // For OAuth providers
+  scope              String?  // For OAuth providers
+  id_token           String?  // For OAuth providers
+  session_state      String?  // For OAuth providers
+
+  @@unique([provider, providerAccountId]) // Ensures uniqueness of account
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires      DateTime
+}
+
+model VerificationToken {
+  id         String   @id @default(uuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token]) // Ensures uniqueness of verification token
+}
+
 
