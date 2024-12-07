@@ -15,6 +15,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import MedicineTypeSelect from "@/components/medicine-type-select";
+import { addMedicines } from "@/actions/actions";
 
 const formSchema = z.object({
   name: z
@@ -22,7 +24,10 @@ const formSchema = z.object({
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must not exceed 50 characters"),
   typeId: z.number().min(1, "Type ID must be at least 1"),
-  numberLeft: z.number().min(1, "Number left must be at least 1"),
+  numberLeft: z.preprocess(
+    (a) => parseInt(z.string().parse(a), 10),
+    z.number().min(0, "Number left must be at least 1")
+  ),
   numberPurchased: z.number().min(0, "Number purchased must be at least 0"),
   instruction: z
     .string()
@@ -32,32 +37,61 @@ const formSchema = z.object({
     .string()
     .min(1, "Side effect cannot be empty")
     .max(255, "Side effect must not exceed 255 characters"),
-  price: z.number().min(1, "Price must be at least 1"),
+  price: z.preprocess(
+    (a) => parseInt(z.string().parse(a), 10),
+    z.number().min(0, "Price must be at least 1")
+  ),
 });
 
 const AddMedicinePage = () => {
-  // Initialize form
+  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       typeId: 1,
-      numberLeft: 1,
+      numberLeft: 0,
       numberPurchased: 0,
       instruction: "",
       sideEffect: "",
-      price: 1,
+      price: 0,
     },
   });
 
+  // Function to handle MedicineTypeSelect value change
+  const handleMedicineTypeChange = (selectedValue: string) => {
+    const selectedTypeId = parseInt(selectedValue, 10);
+    console.log("Selected Type ID:", selectedTypeId);
+
+    form.setValue("typeId", selectedTypeId);
+  };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("Form submitted with values:", values);
-    // Here, you could send the data to an API or perform a mutation.
+    console.log(values);
+    try {
+      const response = await fetch("/api/add-medicine", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        console.log("Medicine added successfully!");
+        form.reset(); // Optionally reset the form
+      } else {
+        console.error("Failed to add medicine");
+      }
+    } catch (error) {
+      console.error("Error adding medicine:", error);
+    }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {/* <form action={addMedicines} method="post" className="space-y-8"> */}
         {/* Name Field */}
         <FormField
           control={form.control}
@@ -81,7 +115,8 @@ const AddMedicinePage = () => {
             <FormItem>
               <FormLabel>Type ID</FormLabel>
               <FormControl>
-                <Input type="number" placeholder="Enter type ID" {...field} />
+                {/* <Input type="number" placeholder="Enter type ID" {...field} /> */}
+                <MedicineTypeSelect onChange={handleMedicineTypeChange} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -99,25 +134,6 @@ const AddMedicinePage = () => {
                 <Input
                   type="number"
                   placeholder="Enter remaining quantity"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Number Purchased Field */}
-        <FormField
-          control={form.control}
-          name="numberPurchased"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Number Purchased</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Enter purchased quantity"
                   {...field}
                 />
               </FormControl>
@@ -170,14 +186,7 @@ const AddMedicinePage = () => {
             </FormItem>
           )}
         />
-
-        {/* Submit Button */}
-        <Button
-          type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white"
-        >
-          Add Medicine
-        </Button>
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );
