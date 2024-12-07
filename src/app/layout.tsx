@@ -8,14 +8,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Separator } from "@radix-ui/react-separator";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
 import { DynamicBreadcrumb } from "@/components/dynamic-breadcrumb";
 
 const geistSans = localFont({

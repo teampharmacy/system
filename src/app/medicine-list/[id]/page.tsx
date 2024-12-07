@@ -1,46 +1,14 @@
-"use client";
-import { getMedicineByName } from "@/lib/utils";
-import { useEffect, useState } from "react";
 import MedicineCard from "./medicine-card";
-import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { PencilLine } from "lucide-react";
+import prisma from "@/lib/db";
 
-interface Medicine {
-  name: string;
-  id: number;
-  typeId: number;
-  numberPurchased: number;
-  numberLeft: number;
-  instruction: string;
-  sideEffect: string;
-  price: number;
-}
-
-const DynamicMedicinePage = () => {
-  const params = useParams();
-  const paramId = params?.id;
-
-  const [medicine, setMedicine] = useState<Medicine | null>(null);
-
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const medicinesData = await getMedicineByName(
-          paramId?.toString() || ""
-        );
-        if (medicinesData && medicinesData.length > 0) {
-          setMedicine(medicinesData[0]); // Set the first medicine found
-        } else {
-          setMedicine(null); // No medicine found
-        }
-      } catch (error) {
-        console.error("Failed to load medicines:", error);
-      }
-    }
-
-    loadData();
-  }, []);
+const DynamicMedicinePage = async ({ params }: { params: { id: string } }) => {
+  const medicine = await prisma?.medicine.findFirst({
+    where: {
+      name: params.id,
+    },
+  });
 
   return (
     <div className="flex flex-col gap-y-8">
@@ -88,3 +56,35 @@ const DynamicMedicinePage = () => {
 };
 
 export default DynamicMedicinePage;
+
+// interface Medicine {
+//   name: string;
+//   id: number;
+//   typeId: number;
+//   numberPurchased: number;
+//   numberLeft: number;
+//   instruction: string;
+//   sideEffect: string;
+//   price: number;
+// }
+
+// const [medicine, setMedicine] = useState<Medicine | null>(null);
+
+// useEffect(() => {
+//   async function loadData() {
+//     try {
+//       const medicinesData = await getMedicineByName(
+//         paramId?.toString() || ""
+//       );
+//       if (medicinesData && medicinesData.length > 0) {
+//         setMedicine(medicinesData[0]); // Set the first medicine found
+//       } else {
+//         setMedicine(null); // No medicine found
+//       }
+//     } catch (error) {
+//       console.error("Failed to load medicines:", error);
+//     }
+//   }
+
+//   loadData();
+// }, []);

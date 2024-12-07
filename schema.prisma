@@ -64,3 +64,25 @@ model Payment {
   amount      Float
   salesTransaction SalesTransaction[]  // Relation to SalesTransaction
 }
+
+model MedicineType {
+  id       Int        @id @default(autoincrement()) // Primary key
+  name     String     @unique                      // Name of the medicine type (e.g., tablet, syrup)
+  medicines Medicine[]                             // Relationship to medicines
+}
+
+model Medicine {
+  id            Int         @id @default(autoincrement()) // Primary key
+  name          String                                  // Name of the medicine
+  numberPurchased Int                                   // Total quantity purchased
+  numberLeft    Int                                     // Quantity left in stock
+  instruction   String?                                 // Instructions for use (optional)
+  sideEffect    String?                                 // Possible side effects (optional)
+  price         Float                                   // Price per unit
+  typeId        Int                                     // Foreign key to MedicineType
+  type          MedicineType @relation(fields: [typeId], references: [id]) // Relationship to MedicineType
+  createdAt     DateTime    @default(now())             // Timestamp for when the record was created
+  updatedAt     DateTime    @updatedAt                  // Timestamp for when the record was last updated
+}
+
+
