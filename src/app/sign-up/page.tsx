@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const SignUpPage = () => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -14,15 +15,16 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, name, password }),
     });
-
+    setLoading(false);
     if (res.ok) {
-      router.push("/auth/signin"); // Redirect to sign-in page after successful signup
+      router.push("sign-in"); // Redirect to sign-in page after successful signup
     } else {
       const data = await res.json();
       setError(data.message || "Something went wrong.");
@@ -71,14 +73,19 @@ const SignUpPage = () => {
             required
           />
         </div>
-        <Button type="submit" variant="default" className="w-full">
-          Sign Up
+        <Button
+          type="submit"
+          variant="default"
+          className="w-full"
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Sign Up"}
         </Button>
       </form>
 
       <p className="mt-4 text-center text-gray-700">
         Already have an account?{" "}
-        <a href="/auth/signin" className="text-blue-600">
+        <a href="/sign-in" className="text-blue-600">
           Sign In
         </a>
       </p>

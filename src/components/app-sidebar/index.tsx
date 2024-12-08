@@ -29,6 +29,8 @@ import {
   CollapsibleTrigger,
 } from "../ui/collapsible";
 
+import AuthUserControls from "./auth-user-control";
+
 const menuItems = [
   {
     group: "Client Menu",
@@ -112,12 +114,18 @@ const menuItems = [
 ];
 
 export function AppSidebar() {
+  // const { data: session } = useSession();
+
+  // const handleSignOut = async () => {
+  //   await signOut({ callbackUrl: "/" }); // Redirect to home after sign-out
+  // };
   return (
     <Sidebar>
       <SidebarHeader>
         <div className="h-10 w-50 bg-gray-300">Pharmacy</div>
       </SidebarHeader>
       <SidebarContent>
+        <AuthUserControls />
         {menuItems.map((menuGroup) => (
           <SidebarGroup key={menuGroup.group}>
             <SidebarGroupContent>

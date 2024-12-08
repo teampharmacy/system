@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { set } from "zod";
 
 const SignInPage = () => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,15 +16,18 @@ const SignInPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setLoading(true);
     const result = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
+    setLoading(false);
 
     if (result?.error) {
       setError(result.error);
+      setEmail("");
+      setPassword("");
     } else {
       router.push("/dashboard"); // Redirect to dashboard on success
     }
@@ -59,8 +64,13 @@ const SignInPage = () => {
             required
           />
         </div>
-        <Button type="submit" variant="default" className="w-full">
-          Sign In
+        <Button
+          type="submit"
+          variant="default"
+          className="w-full"
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Sign In"}
         </Button>
       </form>
 

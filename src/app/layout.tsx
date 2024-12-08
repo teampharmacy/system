@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/sidebar";
 import { Separator } from "@radix-ui/react-separator";
 import { DynamicBreadcrumb } from "@/components/dynamic-breadcrumb";
+// import { SessionWrapper } from "next-auth/react";
+import SessionWrapper from "./SessionWrapper";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,21 +36,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
-            <header className="flex sticky top-0 bg-background h-16 shrink-0 items-center gap-2 border-b px-4">
-              <SidebarTrigger className="-ml-1" />
-              <Separator orientation="vertical" className="mr-2 h-4" />
-              <DynamicBreadcrumb />
-            </header>
-            <main
-              className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-1 flex-col gap-4 p-10`}
-            >
-              {children}
-            </main>
-          </SidebarInset>
-        </SidebarProvider>
+        <SessionWrapper>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <header className="flex sticky top-0 bg-background h-16 shrink-0 items-center gap-2 border-b px-4">
+                <SidebarTrigger className="-ml-1" />
+                <Separator orientation="vertical" className="mr-2 h-4" />
+                <DynamicBreadcrumb />
+              </header>
+              <main
+                className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-1 flex-col gap-4 p-10`}
+              >
+                {children}
+              </main>
+            </SidebarInset>
+          </SidebarProvider>
+        </SessionWrapper>
       </body>
     </html>
   );

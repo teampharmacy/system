@@ -13,10 +13,15 @@ export default async function handler(
 
   const { email, name, password } = req.body;
 
-  if (!email || !password) {
+  if (!email || !password || !name) {
     return res
       .status(400)
-      .json({ message: "Email and password are required." });
+      .json({ message: "Email, password, and name are required." });
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ message: "Invalid email format." });
   }
 
   try {
@@ -41,15 +46,22 @@ export default async function handler(
           create: {
             provider: "credentials",
             providerAccountId: email, // Use email as the account ID for credentials
+            passwordHash: hashedPassword,
           },
         },
       },
     });
 
-    return res
-      .status(201)
-      .json({ message: "User created. Awaiting admin approval.", user });
+    return res.status(201).json({
+      message: "User created. Awaiting admin approval.",
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
+    });
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: "Something went wrong.", error });
   }
 }
