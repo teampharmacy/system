@@ -1,8 +1,9 @@
 import MedicineCard from "./medicine-card";
 import { Button } from "@/components/ui/button";
-import { PencilLine } from "lucide-react";
+import { PencilLine, Trash2 } from "lucide-react";
 import prisma from "@/lib/db";
-
+import Link from "next/link";
+import DeleteButton from "./delete-button";
 const DynamicMedicinePage = async ({ params }: { params: { id: string } }) => {
   const medicine = await prisma?.medicine.findFirst({
     where: {
@@ -14,10 +15,17 @@ const DynamicMedicinePage = async ({ params }: { params: { id: string } }) => {
     <div className="flex flex-col gap-y-8">
       <div className="flex justify-between">
         <h2>{medicine?.name}</h2>
-        <Button className="flex bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-          {" "}
-          <PencilLine /> Засах
-        </Button>
+        <Link
+          href={{
+            pathname: "/edit-medicine",
+            query: { id: medicine?.id },
+          }}
+        >
+          <Button className="flex bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            {" "}
+            <PencilLine /> Засах
+          </Button>
+        </Link>
       </div>
       <div className="flex justify-between gap-10">
         <MedicineCard title="Эм">
@@ -51,40 +59,9 @@ const DynamicMedicinePage = async ({ params }: { params: { id: string } }) => {
       <MedicineCard title="Гаж нөлөө">
         <p>{medicine?.sideEffect}</p>
       </MedicineCard>
+      <DeleteButton id={medicine?.id.toString() || ""} />
     </div>
   );
 };
 
 export default DynamicMedicinePage;
-
-// interface Medicine {
-//   name: string;
-//   id: number;
-//   typeId: number;
-//   numberPurchased: number;
-//   numberLeft: number;
-//   instruction: string;
-//   sideEffect: string;
-//   price: number;
-// }
-
-// const [medicine, setMedicine] = useState<Medicine | null>(null);
-
-// useEffect(() => {
-//   async function loadData() {
-//     try {
-//       const medicinesData = await getMedicineByName(
-//         paramId?.toString() || ""
-//       );
-//       if (medicinesData && medicinesData.length > 0) {
-//         setMedicine(medicinesData[0]); // Set the first medicine found
-//       } else {
-//         setMedicine(null); // No medicine found
-//       }
-//     } catch (error) {
-//       console.error("Failed to load medicines:", error);
-//     }
-//   }
-
-//   loadData();
-// }, []);
