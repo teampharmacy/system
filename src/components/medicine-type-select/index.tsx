@@ -26,10 +26,13 @@ const MedicineTypeSelect: React.FC<MedicineTypeSelectProps> = ({
         const response = await fetch("/api/medicine-types");
         if (!response.ok) throw new Error("Failed to fetch medicine types");
 
+        console.log("Response Status:", response.status);
         const data = await response.json();
-        setMedicineTypes(data);
+        console.log("Fetched Data:", data);
+        setMedicineTypes(data || []);
       } catch (error) {
         console.error(error);
+        setMedicineTypes([]); // Ensure `medicineTypes` is always an array
       } finally {
         setLoading(false);
       }
